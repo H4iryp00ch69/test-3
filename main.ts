@@ -14,6 +14,7 @@ input.onGesture(Gesture.Shake, function () {
         . . . . .
         `)
     time = "" + hours + (":" + ("" + minutes))
+    music.playTone(262, music.beat(BeatFraction.Whole))
     basic.showString(time)
 })
 let hours = 0
