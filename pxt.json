@@ -1,0 +1,23 @@
+{
+    "name": "sequta",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "radio": "*",
+        "TM1637": "github:makecode-extensions/tm1637#v1.0.0",
+        "Grove": "github:seeed-studio/pxt-grove#v0.1.7"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "main.py"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "pyprj"
+}
