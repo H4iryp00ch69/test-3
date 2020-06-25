@@ -1,27 +1,41 @@
-input.onButtonPressed(Button.A, function () {
-    if (0 < 0) {
-    	
-    } else {
-    	
+radio.onReceivedString(function (receivedString) {
+    if (Signal == 1) {
+        Signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
     }
 })
-input.onGesture(Gesture.Shake, function () {
+let Signal = 0
+let SAFE = 9
+radio.setGroup(1)
+radio.setTransmitPower(1)
+if (input.buttonIsPressed(Button.A)) {
+    SAFE = 0
+} else if (input.buttonIsPressed(Button.B)) {
+    SAFE = 1
+}
+basic.showString("please press button after this...")
+if (input.buttonIsPressed(Button.A)) {
+    SAFE = 0
+} else if (input.buttonIsPressed(Button.B)) {
+    SAFE = 1
+} else {
+    SAFE = 0
+    basic.showString("Nothing pressed. U are Zombie")
+}
+basic.forever(function () {
+    while (SAFE == 1) {
+        basic.showIcon(IconNames.Heart)
+        basic.pause(200)
+        if (Signal == -60) {
+            SAFE = 0
+        }
+    }
     basic.showLeds(`
-        . . # . .
-        . . # . .
-        . # . . .
-        . . . . .
+        # # # # #
+        # . # . #
+        # # # # #
+        . # # # .
         . . . . .
         `)
-    time = "" + hours + (":" + ("" + minutes))
-    music.playTone(262, music.beat(BeatFraction.Whole))
-    basic.showString(time)
+    radio.sendString("1")
+    basic.pause(200)
 })
-let hours = 0
-let minutes = 0
-let time = ""
-let adjust = 0
-let ampm = false
-time = ""
-minutes = 0
-hours = 0
