@@ -1,33 +1,28 @@
 radio.onReceivedString(function (receivedString) {
-    if (Signal == 1) {
-        Signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
-    }
+    Signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
+    kills += 1
 })
 let Signal = 0
+let display = grove.createDisplay(DigitalPin.P1, DigitalPin.P14)
+let kills = 0
 let SAFE = 9
-radio.setGroup(1)
+radio.setGroup(72)
 radio.setTransmitPower(1)
-if (input.buttonIsPressed(Button.A)) {
-    SAFE = 0
-} else if (input.buttonIsPressed(Button.B)) {
-    SAFE = 1
-}
-basic.showString("please press button after this...")
-if (input.buttonIsPressed(Button.A)) {
-    SAFE = 0
-} else if (input.buttonIsPressed(Button.B)) {
-    SAFE = 1
-} else {
-    SAFE = 0
-    basic.showString("Nothing pressed. U are Zombie")
+basic.pause(2000)
+while (SAFE == 9) {
+    if (input.buttonIsPressed(Button.A)) {
+        SAFE = 0
+    } else if (input.buttonIsPressed(Button.B)) {
+        SAFE = 1
+    }
 }
 basic.forever(function () {
-    while (SAFE == 1) {
-        basic.showIcon(IconNames.Heart)
-        basic.pause(200)
-        if (Signal == -60) {
-            SAFE = 0
-        }
+    while (SAFE == 1 && led.brightness() < 8) {
+        led.plotBarGraph(
+        Math.map(Signal, -95, -42, 0, 9),
+        9
+        )
+        radio.sendNumber(1)
     }
     basic.showLeds(`
         # # # # #
@@ -37,5 +32,6 @@ basic.forever(function () {
         . . . . .
         `)
     radio.sendString("1")
+    display = kills
     basic.pause(200)
 })
