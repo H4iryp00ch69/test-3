@@ -1,6 +1,5 @@
 radio.onReceivedString(function (receivedString) {
     Signal = radio.receivedPacket(RadioPacketProperty.SignalStrength)
-    kills += 1
 })
 let Signal = 0
 let display = grove.createDisplay(DigitalPin.P1, DigitalPin.P14)
@@ -34,4 +33,10 @@ basic.forever(function () {
     radio.sendString("1")
     display = kills
     basic.pause(200)
+})
+basic.forever(function () {
+    if (led.brightness() < 8) {
+        kills += 1
+        music.playMelody("C5 B A G F E D C ", 120)
+    }
 })
